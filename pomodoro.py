@@ -1,9 +1,9 @@
 """
 Usage:
     pomodoro start <task_title>
-    pomodoro config_time <duration_in_minutes>
-    pomodoro config short_break <duration_in_minutes>
-    pomodoro config long_break <duration_in_minutes>
+    pomodoro config_time <duration_in_seconds>
+    pomodoro config_short_break <duration_in_seconds>
+    pomodoro config_long_break <duration_in_seconds>
     pomodoro config sound <state>
     pomodoro stop
     pomodoro list
@@ -55,6 +55,7 @@ class Pomodoro (cmd.Cmd):
     print(__doc__)
     prompt = 'Enter command>>'
     file = None
+    new_timer=Timer()
 
     @docopt_cmd
     def do_start(self, arg):
@@ -66,9 +67,9 @@ class Pomodoro (cmd.Cmd):
 
     @docopt_cmd
     def do_config_time(self, arg):
-        """Usage: config_time <duration_in_minutes>"""
-        new_timer=Timer()
-        new_timer.setDuration(arg['<duration_in_minutes>'])
+        """Usage: config_time <duration_in_seconds>"""
+        
+        self.new_timer.setDuration(arg['<duration_in_seconds>'])
         print("Changed the duration successfully")
  
 
@@ -77,10 +78,15 @@ class Pomodoro (cmd.Cmd):
  
 
         print(arg)
-    def do_config_long_break(self, arg):
- 
+    def do_config_long_break(self, duration_in_seconds):
+        """Usage: config_long_break <duration_in_seconds>"""
+        if type(duration_in_seconds) != int:
+            long_time_break = int(duration_in_seconds)
+            self.new_timer.setLongbreak(long_time_break)
+        self.new_timer.setLongbreak(duration_in_seconds)
+        print("Long break")
 
-        print(arg)
+        
     def do_config_sound(self, arg):
 
 

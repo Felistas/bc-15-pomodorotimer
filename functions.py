@@ -48,12 +48,18 @@ class Timer:
 #Sets duration for the timer
 	def setDuration(self, duration):
 		self.duration = duration
-		addtime = update(Config).where(Config.id==1).where(duration).values(duration=self.duration)
+		addtime = update(Config).where(Config.id==1).values(duration=self.duration)
 		new_session.execute(addtime)
 		new_session.commit()
-		print("You have changed the duration to " + str(int(self.duration)) + " seconds ")
+		print("You have changed the duration to " + str(self.duration) + " seconds ")
 
-
+	def setLongbreak(self, long_break):
+		self.long_break = long_break
+		addlongbreak = update(Config).where(Config.id==1).values(long_break=self.long_break)
+		new_session.execute(addlongbreak)
+		new_session.commit()
+		print("Long break " + str(self.long_break) + "seconds")
+	
 
 
 
