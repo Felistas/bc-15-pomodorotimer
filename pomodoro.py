@@ -1,6 +1,4 @@
 """
-This example uses docopt with the built in cmd module to demonstrate an
-interactive command application.
 Usage:
     pomodoro start <task_title>
     pomodoro config time <duration_in_minutes>
@@ -14,7 +12,6 @@ Usage:
 Options:
     -i, --interactive  Interactive Mode
     -h, --help  Show this screen and exit.
-    --baud=<n>  Baudrate [default: 9600]
 """
 
 
@@ -24,10 +21,7 @@ from docopt import docopt, DocoptExit
 from functions import Timer
 
 def docopt_cmd(func):
-    """
-    This decorator is used to simplify the try/except block and pass the result
-    of the docopt parsing to the called action.
-    """
+    
     def fn(self, arg):
         try:
             opt = docopt(fn.__doc__, arg)
@@ -57,57 +51,41 @@ def docopt_cmd(func):
 class Pomodoro (cmd.Cmd):
     #intro = 'Welcome to pomodoro timer!' \
         #+ ' (type help for a list of commands.)'
-    prompt = 'Start timer>>'
+    print(__doc__)
+    prompt = 'Start timer then enter the name of the task>>'
     file = None
 
     @docopt_cmd
     def do_start(self, arg):
        """Usage: start <task_title>"""
-       timer = Timer(0,0,0,'',10)
+       timer = Timer(0,0,0,'',5)
        timer.getTimer(arg['<task_title>'])
-       print(arg)
+       print("Task successfully added")
+       
 
     @docopt_cmd
     def do_config_time(self, arg):
-        """Usage: serial <port> [--baud=<n>] [--timeout=<seconds>]
-Options:
-    --baud=<n>  Baudrate [default: 9600]
-        """
+ 
 
         print(arg)
     def do_config_shortbreak(self, arg):
-        """Usage: serial <port> [--baud=<n>] [--timeout=<seconds>]
-Options:
-    --baud=<n>  Baudrate [default: 9600]
-        """
+ 
 
         print(arg)
     def do_config_long_break(self, arg):
-        """Usage: serial <port> [--baud=<n>] [--timeout=<seconds>]
-Options:
-    --baud=<n>  Baudrate [default: 9600]
-        """
+ 
 
         print(arg)
     def do_config_sound(self, arg):
-        """Usage: serial <port> [--baud=<n>] [--timeout=<seconds>]
-Options:
-    --baud=<n>  Baudrate [default: 9600]
-        """
+
 
         print(arg)
     def do_stop(self, arg):
-        """Usage: serial <port> [--baud=<n>] [--timeout=<seconds>]
-Options:
-    --baud=<n>  Baudrate [default: 9600]
-        """
+
 
         print(arg)
     def do_list(self, arg):
-        """Usage: serial <port> [--baud=<n>] [--timeout=<seconds>]
-Options:
-    --baud=<n>  Baudrate [default: 9600]
-        """
+  
 
         print(arg)
 
@@ -118,10 +96,10 @@ Options:
         print('Good Bye!')
         exit()
 
-opt = docopt(__doc__, sys.argv[1:])
-if opt['--interactive']:
-    print('Welcome to pomodoro timer!')
-    
-    Pomodoro().cmdloop()
 
-print(opt)
+if __name__ == '__main__':
+    try:
+        Pomodoro().cmdloop()
+    except KeyboardInterrupt:
+        print("\nff")
+        exit()
