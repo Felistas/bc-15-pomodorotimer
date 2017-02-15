@@ -1,7 +1,7 @@
 """
 Usage:
     pomodoro start <task_title>
-    pomodoro config time <duration_in_minutes>
+    pomodoro config_time <duration_in_minutes>
     pomodoro config short_break <duration_in_minutes>
     pomodoro config long_break <duration_in_minutes>
     pomodoro config sound <state>
@@ -19,6 +19,7 @@ import sys
 import cmd
 from docopt import docopt, DocoptExit
 from functions import Timer
+
 
 def docopt_cmd(func):
     
@@ -52,22 +53,26 @@ class Pomodoro (cmd.Cmd):
     #intro = 'Welcome to pomodoro timer!' \
         #+ ' (type help for a list of commands.)'
     print(__doc__)
-    prompt = 'Start timer then enter the name of the task>>'
+    prompt = 'Enter command>>'
     file = None
 
     @docopt_cmd
     def do_start(self, arg):
        """Usage: start <task_title>"""
-       timer = Timer(0,0,0,'',5)
+       timer = Timer()
        timer.getTimer(arg['<task_title>'])
        print("Task successfully added")
        
 
     @docopt_cmd
     def do_config_time(self, arg):
+        """Usage: config_time <duration_in_minutes>"""
+        new_timer=Timer()
+        new_timer.setDuration(arg['<duration_in_minutes>'])
+        print("Changed the duration successfully")
  
 
-        print(arg)
+        
     def do_config_shortbreak(self, arg):
  
 
