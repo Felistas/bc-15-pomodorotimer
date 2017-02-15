@@ -9,7 +9,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy import update
 from sqlalchemy import create_engine, MetaData, Table
 Base = declarative_base()
-engine = create_engine("sqlite:///tasks.db")
+engine = create_engine("sqlite:///pomodorotimer.db")
 #define columns for the table named tasks
 class Task(Base):
 	__tablename__='tasks'
@@ -22,7 +22,7 @@ class Config(Base):
 	duration=Column(Integer())
 	long_break=Column(Integer())
 	short_break=Column(Integer())
-	
+
 
 
 
