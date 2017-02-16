@@ -7,6 +7,7 @@ Usage:
     pomodoro config_sound <state>
     pomodoro stop
     pomodoro list
+    pomodoro reset <rreset>
     pomodoro (-i | --interactive)
     pomodoro (-h | --help | --version)
 Options:
@@ -92,6 +93,8 @@ class Pomodoro (cmd.Cmd):
         """Usage: config_sound <state> """
         self.new_timer.setsound(arg['<state>'])
         print("Sound on")
+    def do_rest(self, arg):
+        self.new_timer.setReset(ard['<reset>'])
 
 
 
