@@ -48,7 +48,7 @@ class Timer:
 		time.clock()	
 		elapsed = duration
 		output = ''
-		font= Figlet(font='roman')
+		font= Figlet(font='standard')
 		while elapsed > 0:
 			output = str(int(elapsed // 60)) + " min " + str(int(elapsed % 60)) + " sec "
 			output = font.renderText(output)
@@ -60,7 +60,7 @@ class Timer:
 			elapsed = elapsed - 1
 			m, s = divmod(duration, 60)
 			h, m = divmod(m, 60)
-		print(font.renderText("Time up"))
+		print(colored(font.renderText("Time up"), 'green'))
 		self.no_of_breaks = self.no_of_breaks + 1
 		if self.sound_mode == "on":
 			self.sound.play()
@@ -135,7 +135,7 @@ class Timer:
 		time.clock() 
 		elapsed = int(self.breakduration)
 		output = ''
-		font= Figlet(font='roman')
+		font= Figlet(font='standard')
 		while elapsed > 0:
 			output = str(int(elapsed // 60)) + " min " + str(int(elapsed % 60)) + " sec "
 			output = font.renderText(output)
@@ -146,7 +146,7 @@ class Timer:
 			elapsed = elapsed - 1
 			m, s = divmod(elapsed,60)
 			h, m = divmod(m, 60)
-		print(font.renderText("Break is over"))
+		print(colored(font.renderText("Break is over"), 'green'))
 		
 		print("You can start a new task")
 	def listtasks(self):
