@@ -12,11 +12,11 @@ from sqlalchemy import create_engine, MetaData, Table
 Base = declarative_base()
 engine = create_engine("sqlite:///pomodorotimer.db")
 #define columns for the table named tasks
-duration = 25
-short_break = 5
-long_break = 15
+duration = 1500
+short_break = 300
+long_break = 900
 mytime = 0
-sound_mode = ''
+sound_mode = 'on'
 class Task(Base):
 
 	__tablename__='tasks'
