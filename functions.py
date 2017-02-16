@@ -15,7 +15,7 @@ from tabulate import tabulate
 from termcolor import colored
 from pyfiglet import Figlet
 Base = declarative_base()
-engine = create_engine("sqlite:///C:/Users/Shera/Desktop/pomodoro/pomodorotimer.db")
+engine = create_engine("sqlite:///pomodorotimer.db")
 session = sessionmaker(bind=engine)
 new_session = session()
 
