@@ -7,7 +7,7 @@ Usage:
     pomodoro config_sound <state>
     pomodoro stop
     pomodoro list
-    pomodoro reset <rreset>
+    pomodoro reset 
     pomodoro (-i | --interactive)
     pomodoro (-h | --help | --version)
 Options:
@@ -18,8 +18,19 @@ Options:
 
 import sys
 import cmd
+import os
 from docopt import docopt, DocoptExit
 from functions import Timer
+from colorama import init 
+from pyfiglet import Figlet
+from termcolor import *
+
+init()
+font = Figlet(font='ogre')
+introduction = font.renderText('POMODORO TIMER')
+os.system('cls')
+cprint(introduction, "red", attrs=['blink'])
+
 
 
 def docopt_cmd(func):
@@ -61,8 +72,8 @@ class Pomodoro (cmd.Cmd):
     @docopt_cmd
     def do_start(self, arg):
        """Usage: start <task_title>"""
-       timer = Timer()
-       timer.getTimer(arg['<task_title>'])
+       
+       self.new_timer.getTimer(arg['<task_title>'])
        print("Task successfully added")
        
 
@@ -89,12 +100,12 @@ class Pomodoro (cmd.Cmd):
         
         
     def do_config_sound(self, arg):
-        """Usage: config_sound <state> """
-        self.new_timer.setsound(arg['<state>'])
-        print("Sound on")
+        """Usage: config_sound <state>"""
+        self.new_timer.setSound(arg.lower())
+        
     def do_rest(self, arg):
-        self.new_timer.setReset(ard['<reset>'])
-        print("You have reset tp default")
+        self.new_timer.setReset()
+        print("You have reset to default")
 
 
 

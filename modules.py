@@ -38,6 +38,6 @@ class Config(Base):
 Base.metadata.create_all(engine)
 session = sessionmaker(bind=engine)
 new_session = session()
-config = Config(duration=duration,long_break=long_break,short_break=short_break)
+config = Config(duration=duration,long_break=long_break,short_break=short_break,sound_mode=sound_mode)
 new_session.add(config)
 new_session.commit()

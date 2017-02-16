@@ -8,6 +8,7 @@ from sqlalchemy import update
 from modules import Task, Config
 from datetime import datetime
 from sqlalchemy.ext.declarative import declarative_base
+from pygame import mixer
 Base = declarative_base()
 engine = create_engine("sqlite:///C:/Users/Shera/Desktop/pomodoro/pomodorotimer.db")
 session = sessionmaker(bind=engine)
@@ -22,21 +23,24 @@ class Timer:
 		self.duration=con.duration
 		self.short_break= con.short_break
 		self.long_break = con.long_break
+		mixer.init()
+		self.sound = mixer.Sound("ding.wav")
 		self.sound_mode = con.sound_mode
 		self.breakduration = con.short_break
 		self.no_of_breaks = 0
+
 
 #Add task name and date
 	def getTimer(self,task_name):
 
 		
-		duration = self.duration
+		duration = int(self.duration)
 		task=Task(name=task_name,date=datetime.now())
 		new_session.add(task)
 		new_session.commit()
 		Base.metadata.create_all(engine)
 		start = time.time()
-		time.clock()    
+		time.clock()	
 		elapsed = duration
 		while elapsed > 0:
 			sys.stdout.write ("\r" + str(elapsed))
@@ -45,6 +49,10 @@ class Timer:
 			elapsed = elapsed - 1
 			m, s = divmod(duration, 60)
 			h, m = divmod(m, 60)
+		print(elapsed)
+		self.no_of_breaks = self.no_of_breaks + 1
+		if self.sound_mode == "on":
+			self.sound.play()
 		self.breaktimer()
 
 
@@ -75,47 +83,61 @@ class Timer:
 		#new_session.execute(addcommand)
 		new_session.commit()
 		print("Short break " + str(self.short_break) + "seconds")
-	def setSound(self, sound):#sets sound for the timer
-		self.sound = sound
-		addcommand = new_session.query(Config).order_by(Config.id.desc()).first()
-		addcommand.sound = self.sound
+	def setSound(self, sound_mode):
+		self.sound_mode=sound_mode
+	#sets sound for the timer
+		if sound_mode == "on":
+			self.sound.play()
+		if sound_mode=="on" or sound_mode=="off":
+			addcommand = new_session.query(Config).order_by(Config.id.desc()).first()
+			addcommand.sound = sound_mode
 		#new_session.execute(addcommand)
-		new_session.commit()
-		print("Sound has been turned on"+ str(self.sound) + ".")
-	def setRest(self):#resets the timer to its default
-	    addcommand = new_session.query(Config).order_by(Config.id.desc()).first()
-	    addcommand.duration = 1500
-	    addcommand.long_break = 900
-	    addcommand.short_break = 300
-
-	    #session.execute(addcommand)
-	    new_session.commit()
-	    print("Default configuration has been rest")
-	def breaktimer(self):
-		elapsed = 0
-		print("The no of tasks" + str (self.no_of_breaks) + ".")
-		if self.no_of_breaks < 4:
-			elapsed = self.short_break
-			self.no_of_breaks +=1
+			new_session.commit()
+			print("Sound has been turned "+ str(sound_mode) + ".")
 		else:
-			elapsed = self.long_break
-			self.no_of_breaks = 0
+			print("Invalid choice")
+	def setReset(self):#resets the timer to its default
+		addcommand = new_session.query(Config).order_by(Config.id.desc()).first()
+		addcommand.duration = 1500
+		addcommand.long_break = 900
+		addcommand.short_break = 300
+		addcommand.sound_mode = "on"
+		self.sound_mode="on"
+		self.duration = 1500
+		self.long_break = 900
+		self.short_break = 300
 
+		new_session.commit()
+		print("Default configuration has been rest")
+	def breaktimer(self):
+
+		
+		if self.no_of_breaks < 4:
+			self.breakduration = self.short_break
+			
+		else:
+			self.no_of_breaks = 0
+			self.breakduration = self.long_break
 		start = time.time()
-		time.clock()    
+		time.clock() 
+		elapsed = int(self.breakduration)
 		while elapsed > 0:
+			#.setSound()
 			sys.stdout.write ("\r" + str(elapsed))
 			time.sleep(1) 
 			sys.stdout.flush()
 			elapsed = elapsed - 1
 			m, s = divmod(elapsed,60)
 			h, m = divmod(m, 60)
+		
 		print("You can start a new task")
+		print(str(self.breakduration) + ',' + str(self.no_of_breaks))
 
 
 
 
-	    
+
+		
 	
 
 
