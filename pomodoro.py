@@ -4,7 +4,7 @@ Usage:
     pomodoro config_time <duration_in_seconds>
     pomodoro config_short_break <duration_in_seconds>
     pomodoro config_long_break <duration_in_seconds>
-    pomodoro config sound <state>
+    pomodoro config_sound <state>
     pomodoro stop
     pomodoro list
     pomodoro (-i | --interactive)
@@ -89,7 +89,10 @@ class Pomodoro (cmd.Cmd):
         print("Short break")
         
     def do_config_sound(self, arg):
-        print(arg)
+        """Usage: config_sound <state> """
+        self.new_timer.setsound(arg['<state>'])
+        print("Sound on")
+
 
 
     def do_stop(self, arg):
