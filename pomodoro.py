@@ -103,7 +103,7 @@ class Pomodoro (cmd.Cmd):
         """Usage: config_sound <state>"""
         self.new_timer.setSound(arg.lower())
         
-    def do_rest(self, arg):
+    def do_reset(self, arg):
         self.new_timer.setReset()
         print("You have reset to default")
 
@@ -114,9 +114,7 @@ class Pomodoro (cmd.Cmd):
 
         print(arg)
     def do_list(self, arg):
-  
-
-        print(arg)
+        self.new_timer.listtasks()
 
 
     def do_quit(self, arg):

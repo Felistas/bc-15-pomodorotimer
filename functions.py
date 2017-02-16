@@ -9,6 +9,9 @@ from modules import Task, Config
 from datetime import datetime
 from sqlalchemy.ext.declarative import declarative_base
 from pygame import mixer
+from tabulate import tabulate
+from termcolor import colored
+
 Base = declarative_base()
 engine = create_engine("sqlite:///C:/Users/Shera/Desktop/pomodoro/pomodorotimer.db")
 session = sessionmaker(bind=engine)
@@ -108,7 +111,7 @@ class Timer:
 		self.short_break = 300
 
 		new_session.commit()
-		print("Default configuration has been rest")
+		
 	def breaktimer(self):
 
 		
@@ -131,7 +134,15 @@ class Timer:
 			h, m = divmod(m, 60)
 		
 		print("You can start a new task")
-		print(str(self.breakduration) + ',' + str(self.no_of_breaks))
+	def listtasks(self):
+		tasklist = new_session.query(Task)
+		lists = tasklist.all()
+		table = []
+		for task in lists:
+			table.append([str(task.id),str(task.name),str(task.date)])
+		print(colored(tabulate(table, headers=["TASK ID","NAME","DATE"], tablefmt='fancy_grid'), 'cyan' ))
+
+		
 
 
 
