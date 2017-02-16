@@ -56,7 +56,7 @@ class Timer:
 			time.sleep(1) 
 			sys.stdout.flush()
 
-			os.system('cls')
+			os.system('clear')
 			elapsed = elapsed - 1
 			m, s = divmod(duration, 60)
 			h, m = divmod(m, 60)
@@ -65,7 +65,7 @@ class Timer:
 		if self.sound_mode == "on":
 			self.sound.play()
 		time.sleep(2)
-		os.system('cls')
+		os.system('clear')
 		self.breaktimer()
 
 
@@ -142,7 +142,7 @@ class Timer:
 			sys.stdout.write ("\r" + output)
 			time.sleep(1) 
 			sys.stdout.flush()
-			os.system('cls')
+			os.system('clear')
 			elapsed = elapsed - 1
 			m, s = divmod(elapsed,60)
 			h, m = divmod(m, 60)

@@ -28,7 +28,7 @@ from termcolor import *
 init()
 font = Figlet(font='poison')
 introduction = font.renderText('POMODORO')
-os.system('cls')
+os.system('clear')
 cprint(introduction, "yellow", attrs=['blink'])
 
 
