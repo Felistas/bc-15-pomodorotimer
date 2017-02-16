@@ -26,10 +26,10 @@ from pyfiglet import Figlet
 from termcolor import *
 
 init()
-font = Figlet(font='ogre')
-introduction = font.renderText('POMODORO TIMER')
+font = Figlet(font='poison')
+introduction = font.renderText('POMODORO')
 os.system('cls')
-cprint(introduction, "red", attrs=['blink'])
+cprint(introduction, "yellow", attrs=['blink'])
 
 
 
@@ -64,7 +64,7 @@ def docopt_cmd(func):
 class Pomodoro (cmd.Cmd):
     #intro = 'Welcome to pomodoro timer!' \
         #+ ' (type help for a list of commands.)'
-    print(__doc__)
+    print(colored(__doc__,'green'))
     prompt = 'Enter command>>'
     file = None
     new_timer=Timer()
@@ -88,7 +88,7 @@ class Pomodoro (cmd.Cmd):
         try:
             duration = int(arg['<duration_in_seconds>'])
         except ValueError:
-            print("Invalid value entered")
+            print(colored("Invalid value entered", 'red'))
             return
         self.new_timer.setDuration(arg['<duration_in_seconds>'])
 
@@ -97,7 +97,7 @@ class Pomodoro (cmd.Cmd):
         try:
             long_time_break = int(duration_in_seconds)
         except ValueError:
-            print("Invalid input")
+            print(colored("Invalid input", 'red'))
             return 
             
         self.new_timer.setLongbreak(duration_in_seconds)
@@ -108,7 +108,7 @@ class Pomodoro (cmd.Cmd):
         try:
             short_time_break = int(duration_in_seconds)
         except ValueError:
-            print("Invalid Input")
+            print(colored("Invalid Input",'red'))
             return
 
         self.new_timer.setShortbreak(duration_in_seconds)
@@ -117,13 +117,13 @@ class Pomodoro (cmd.Cmd):
     def do_config_sound(self, arg):
         """Usage: config_sound <state>"""
         if arg.upper() not in ['ON','OFF']:
-            print("State should be on or off")
+            print(colored("State should be on or off", 'red'))
             return
         self.new_timer.setSound(arg.lower())
         
     def do_reset(self, arg):
         self.new_timer.setReset()
-        print("You have reset to default")
+        print(colored("You have reset to default", 'yellow'))
    
     def do_list(self, arg):
         self.new_timer.listtasks()

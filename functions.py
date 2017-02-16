@@ -50,7 +50,7 @@ class Timer:
 		output = ''
 		font= Figlet(font='roman')
 		while elapsed > 0:
-			output = str(int(elapsed // 60)) + " minutes " + str(int(elapsed % 60)) + " seconds "
+			output = str(int(elapsed // 60)) + " min " + str(int(elapsed % 60)) + " sec "
 			output = font.renderText(output)
 			sys.stdout.write ("\r" + output)
 			time.sleep(1) 
@@ -137,7 +137,7 @@ class Timer:
 		output = ''
 		font= Figlet(font='roman')
 		while elapsed > 0:
-			output = str(int(elapsed // 60)) + " minutes " + str(int(elapsed % 60)) + " seconds "
+			output = str(int(elapsed // 60)) + " min " + str(int(elapsed % 60)) + " sec "
 			output = font.renderText(output)
 			sys.stdout.write ("\r" + output)
 			time.sleep(1) 
