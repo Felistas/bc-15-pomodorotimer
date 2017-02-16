@@ -1,6 +1,8 @@
 import time
 import datetime
 import sys
+import os
+
 from modules import Task, Config
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -11,7 +13,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from pygame import mixer
 from tabulate import tabulate
 from termcolor import colored
-
+from pyfiglet import Figlet
 Base = declarative_base()
 engine = create_engine("sqlite:///C:/Users/Shera/Desktop/pomodoro/pomodorotimer.db")
 session = sessionmaker(bind=engine)
@@ -45,17 +47,25 @@ class Timer:
 		start = time.time()
 		time.clock()	
 		elapsed = duration
+		output = ''
+		font= Figlet(font='roman')
 		while elapsed > 0:
-			sys.stdout.write ("\r" + str(elapsed))
+			output = str(int(elapsed // 60)) + " minutes " + str(int(elapsed % 60)) + " seconds "
+			output = font.renderText(output)
+			sys.stdout.write ("\r" + output)
 			time.sleep(1) 
 			sys.stdout.flush()
+
+			os.system('cls')
 			elapsed = elapsed - 1
 			m, s = divmod(duration, 60)
 			h, m = divmod(m, 60)
-		print(elapsed)
+		print(font.renderText("Time up"))
 		self.no_of_breaks = self.no_of_breaks + 1
 		if self.sound_mode == "on":
 			self.sound.play()
+		time.sleep(2)
+		os.system('cls')
 		self.breaktimer()
 
 
@@ -124,14 +134,19 @@ class Timer:
 		start = time.time()
 		time.clock() 
 		elapsed = int(self.breakduration)
+		output = ''
+		font= Figlet(font='roman')
 		while elapsed > 0:
-			#.setSound()
-			sys.stdout.write ("\r" + str(elapsed))
+			output = str(int(elapsed // 60)) + " minutes " + str(int(elapsed % 60)) + " seconds "
+			output = font.renderText(output)
+			sys.stdout.write ("\r" + output)
 			time.sleep(1) 
 			sys.stdout.flush()
+			os.system('cls')
 			elapsed = elapsed - 1
 			m, s = divmod(elapsed,60)
 			h, m = divmod(m, 60)
+		print(font.renderText("Break is over"))
 		
 		print("You can start a new task")
 	def listtasks(self):
@@ -142,6 +157,7 @@ class Timer:
 			table.append([str(task.id),str(task.name),str(task.date)])
 		print(colored(tabulate(table, headers=["TASK ID","NAME","DATE"], tablefmt='fancy_grid'), 'cyan' ))
 
+
 		
 
 
@@ -150,6 +166,5 @@ class Timer:
 
 		
 	
-
 
 

@@ -71,48 +71,60 @@ class Pomodoro (cmd.Cmd):
 
     @docopt_cmd
     def do_start(self, arg):
-       """Usage: start <task_title>"""
-       
-       self.new_timer.getTimer(arg['<task_title>'])
-       print("Task successfully added")
+        """Usage: start <task_title>"""
+        try:
+            self.new_timer.getTimer(arg['<task_title>'])
+            print("Task successfully added")
+        except ValueError:
+            print("Invalid value entered")
+            return
+        except:
+            pass
        
 
     @docopt_cmd
     def do_config_time(self, arg):
         """Usage: config_time <duration_in_seconds>"""
-        
+        try:
+            duration = int(arg['<duration_in_seconds>'])
+        except ValueError:
+            print("Invalid value entered")
+            return
         self.new_timer.setDuration(arg['<duration_in_seconds>'])
-        print("Changed the duration successfully")
 
     def do_config_long_break(self, duration_in_seconds):
         """Usage: config_long_break <duration_in_seconds>"""
-        if type(duration_in_seconds) != int:
+        try:
             long_time_break = int(duration_in_seconds)
+        except ValueError:
+            print("Invalid input")
+            return 
             
         self.new_timer.setLongbreak(duration_in_seconds)
         
         
     def do_config_short_break(self, duration_in_seconds):
         """Usage: config_short_break <duration_in_seconds>"""
-        if type(duration_in_seconds) != int:
+        try:
             short_time_break = int(duration_in_seconds)
+        except ValueError:
+            print("Invalid Input")
+            return
+
         self.new_timer.setShortbreak(duration_in_seconds)
         
         
     def do_config_sound(self, arg):
         """Usage: config_sound <state>"""
+        if arg.upper() not in ['ON','OFF']:
+            print("State should be on or off")
+            return
         self.new_timer.setSound(arg.lower())
         
     def do_reset(self, arg):
         self.new_timer.setReset()
         print("You have reset to default")
-
-
-
-    def do_stop(self, arg):
-
-
-        print(arg)
+   
     def do_list(self, arg):
         self.new_timer.listtasks()
 
@@ -128,5 +140,4 @@ if __name__ == '__main__':
     try:
         Pomodoro().cmdloop()
     except KeyboardInterrupt:
-        print("\nff")
-        exit()
+        Pomodoro().cmdloop()
