@@ -53,20 +53,26 @@ class Timer:
 		new_session.commit()
 		print("You have changed the duration to " + str(self.duration) + " seconds ")
 
-	def setLongbreak(self, long_break):
+	def setLongbreak(self, long_break):#sets long break for the timer
 		self.long_break = long_break
 		addcommand = update(Config).where(Config.id==1).values(long_break=self.long_break)
 		new_session.execute(addcommand)
 		new_session.commit()
 		print("Long break " + str(self.long_break) + "seconds")
 
-	def setShortbreak(self, short_break):
+	def setShortbreak(self, short_break):#sets short break for the timer
 		self.short_break = short_break
 		addcommand = update(Config).where(Config.id==1).values(short_break=self.short_break)
 		new_session.execute(addcommand)
 		new_session.commit()
 		print("Short break " + str(self.short_break) + "seconds")
-
+	def setSound(self, sound):#sets sound for the timer
+		self.sound = sound
+		addcommand = update(Config).where(Config.id==1).values(sound=self.sound)
+		new_session.execute(addcommand)
+		new_session.commit()
+		print("Sound has been turned on"+ str(self.sound) + ".")
+	 
 
 	
 
