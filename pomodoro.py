@@ -95,6 +95,7 @@ class Pomodoro (cmd.Cmd):
         print("Sound on")
     def do_rest(self, arg):
         self.new_timer.setReset(ard['<reset>'])
+        print("You have reset tp default")
 
 
 
