@@ -72,8 +72,11 @@ class Timer:
 		new_session.execute(addcommand)
 		new_session.commit()
 		print("Sound has been turned on"+ str(self.sound) + ".")
-	 
-
+	def setRest(self):#resets the timer to its default
+	    addcommand = update(Config).where(Config.id==1).values(duration = 25,short = 5,long = 15, sound = self.sound, task_num = 4)
+	    session.execute(addcommand)
+	    session.commit()
+	    print("Default configuration has been rest")
 	
 
 
