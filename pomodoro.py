@@ -71,13 +71,7 @@ class Pomodoro (cmd.Cmd):
         
         self.new_timer.setDuration(arg['<duration_in_seconds>'])
         print("Changed the duration successfully")
- 
 
-        
-    def do_config_shortbreak(self, arg):
- 
-
-        print(arg)
     def do_config_long_break(self, duration_in_seconds):
         """Usage: config_long_break <duration_in_seconds>"""
         if type(duration_in_seconds) != int:
@@ -85,12 +79,19 @@ class Pomodoro (cmd.Cmd):
             self.new_timer.setLongbreak(long_time_break)
         self.new_timer.setLongbreak(duration_in_seconds)
         print("Long break")
-
+        
+    def do_config_shortbreak(self, duration_in_seconds):
+        """Usage: config_short_break <duration_in_seconds>"""
+        if type(duration_in_seconds) != int:
+            short_time_break = int(duration_in_seconds)
+            self.new_timer.setShortbreak(short_time_break)
+        self.new_timer.setShortbreak(duration_in_seconds)
+        print("Short break")
         
     def do_config_sound(self, arg):
-
-
         print(arg)
+
+
     def do_stop(self, arg):
 
 
