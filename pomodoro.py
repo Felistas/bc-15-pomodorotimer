@@ -24,15 +24,11 @@ from functions import Timer
 from colorama import init 
 from pyfiglet import Figlet
 from termcolor import *
-
 init()
 font = Figlet(font='poison')
 introduction = font.renderText('POMODORO')
 os.system('cls')
 cprint(introduction, "yellow", attrs=['blink'])
-
-
-
 def docopt_cmd(func):
     
     def fn(self, arg):
@@ -122,14 +118,17 @@ class Pomodoro (cmd.Cmd):
         self.new_timer.setSound(arg.lower())
         
     def do_reset(self, arg):
+        """Usage: reset"""
         self.new_timer.setReset()
         print(colored("You have reset to default", 'yellow'))
    
     def do_list(self, arg):
+        """Usage: list"""
         self.new_timer.listtasks()
 
 
     def do_quit(self, arg):
+    
         """Quits out of Interactive Mode."""
 
         print('Good Bye!')
